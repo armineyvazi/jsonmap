@@ -1,0 +1,113 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for interacting with the JSONMap GPT service.",
+        "title": "JSONMap API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "paths": {
+        "/api/v1/gpt": {
+            "post": {
+                "description": "Processes a request and returns laptop details based on the input data.\nExample curl command:\n```bash\ncurl -X POST \"http://localhost:3000/api/v1/gpt\" -H \"Content-Type: application/json\" -d '{\"data\": \"example request data\"}'\n```",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Laptop"
+                ],
+                "summary": "Get laptop details from GPT model",
+                "parameters": [
+                    {
+                        "description": "Request body containing data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/gpt.LaptopRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.LaptopDetail"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gpt.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gpt.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.LaptopDetail": {
+            "type": "object",
+            "properties": {
+                "batteryStatus": {
+                    "description": "No",
+                    "type": "string"
+                },
+                "brand": {
+                    "description": "Dell",
+                    "type": "string"
+                },
+                "model": {
+                    "description": "Inspiron",
+                    "type": "string"
+                },
+                "processor": {
+                    "description": "Intel Core i7-10510U",
+                    "type": "string"
+                },
+                "ramCapacity": {
+                    "description": "16GB",
+                    "type": "string"
+                },
+                "ramType": {
+                    "description": "DDR4",
+                    "type": "string"
+                },
+                "storageCapacity": {
+                    "description": "512GB",
+                    "type": "string"
+                }
+            }
+        },
+        "gpt.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "gpt.LaptopRequest": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

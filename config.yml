@@ -1,0 +1,7 @@
+
+app_name: "jsonmap"
+
+http_server:
+  address: "0.0.0.0:3005"
+
+zap_log_level: "info"

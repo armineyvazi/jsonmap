@@ -1,0 +1,81 @@
+basePath: /api/v1
+definitions:
+  dto.LaptopDetail:
+    properties:
+      batteryStatus:
+        description: "No"
+        type: string
+      brand:
+        description: Dell
+        type: string
+      model:
+        description: Inspiron
+        type: string
+      processor:
+        description: Intel Core i7-10510U
+        type: string
+      ramCapacity:
+        description: 16GB
+        type: string
+      ramType:
+        description: DDR4
+        type: string
+      storageCapacity:
+        description: 512GB
+        type: string
+    type: object
+  gpt.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  gpt.LaptopRequest:
+    properties:
+      data:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: API for interacting with the JSONMap GPT service.
+  title: JSONMap API
+  version: "1.0"
+paths:
+  /api/v1/gpt:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Processes a request and returns laptop details based on the input data.
+        Example curl command:
+        ```bash
+        curl -X POST "http://localhost:3000/api/v1/gpt" -H "Content-Type: application/json" -d '{"data": "example request data"}'
+        ```
+      parameters:
+      - description: Request body containing data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/gpt.LaptopRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.LaptopDetail'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gpt.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gpt.ErrorResponse'
+      summary: Get laptop details from GPT model
+      tags:
+      - Laptop
+swagger: "2.0"
